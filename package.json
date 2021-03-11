@@ -13,6 +13,8 @@
   "dependencies": {
     "@babel/preset-env": "^7.13.10",
     "@babel/preset-react": "^7.12.13",
+    "antd": "^4.13.1",
+    "axios": "^0.21.1",
     "babel-loader": "^8.2.2",
     "css-loader": "^5.1.2",
     "html-webpack-plugin": "^5.3.1",
