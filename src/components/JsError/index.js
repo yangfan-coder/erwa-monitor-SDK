@@ -7,6 +7,7 @@
 import ComonError from '../ComonError';
 import CollectEvent from '../CollectEvent';
 
+const Resources = ['script', 'link', 'img'];
 class JsError {
   constructor(config) {
     this.comonError = new ComonError();
@@ -36,6 +37,12 @@ class JsError {
     const that = this;
 
     const eventError = function (event) {
+      const target = event.target || event.srcElement;
+      const localName = target.localName;
+
+      // 如果是资源加载错误的时候 、在另外一个class中单独处理
+      if (localName && Resources.includes(localName)) return;
+
       // # lineno => <https://developer.mozilla.org/zh-CN/docs/Web/API/GlobalEventHandlers/onerror>
       const { lineno, filename, message, type } = event;
       const data = Object.assign({}, that.config, { lineno, filename, message, type });

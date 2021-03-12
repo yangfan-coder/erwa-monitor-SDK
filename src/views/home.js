@@ -47,6 +47,13 @@ const Home = () => {
     document.body.appendChild(img);
   };
 
+  // iframe load error
+  const IframeLoadError = () => {
+    const iframe = document.createElement('iframe');
+    iframe.src = `/aaa.html`;
+    document.body.appendChild(iframe);
+  };
+
   return (
     <>
       <h1>Javascript 错误</h1>
@@ -67,6 +74,9 @@ const Home = () => {
       </Button>
       <Button type='primary' onClick={ImagesLoadError}>
         没有加载images
+      </Button>
+      <Button type='primary' onClick={IframeLoadError}>
+        没有加载iframe
       </Button>
       <hr />
     </>

@@ -19,8 +19,9 @@ class ComonError {
   // 静态存储获取当前的错误类型、
   [ErrorType](type) {
     const Type = {
-      error: 1,
-      unhandledrejection: 2,
+      error: 1, // JavaScript的报错
+      unhandledrejection: 2, // promise 的报错
+      loadError: 3, // 加载资源报错
       default: -99,
     };
 
@@ -32,7 +33,7 @@ class ComonError {
     let result = {};
 
     if (typeof event === 'object' && event.hasOwnProperty('type')) {
-      const { lineno, filename, message, type } = event;
+      const { lineno = '', filename = '', message = '', type } = event;
       const typeId = this[ErrorType](type);
 
       // javascript 上报错误
@@ -43,9 +44,14 @@ class ComonError {
       else if (type === 'unhandledrejection') {
         result = Object.assign({}, data, { lineno, filename, message, type, typeId });
       }
+      // 资源加载失败上报
+      else if (type === 'loadError') {
+        result = Object.assign({}, data, { lineno, filename, message, type, typeId });
+      }
     }
 
     this.errors = addObjectPrefix(result);
+    console.log(this.errors);
   }
 }
 

@@ -27,9 +27,6 @@ class WrapNavigator {
       // appVersion
       this[data].appVersion = navigator.appVersion;
 
-      // CPU
-      this[data].cpuClass = navigator.cpuClass;
-
       // platform
       this[data].platform = navigator.platform;
 
