@@ -3,6 +3,7 @@
  * @author yangfan19
  * @version 1.0
  */
+
 import ComonError from '../ComonError';
 import CollectEvent from '../CollectEvent';
 class ResourceError {

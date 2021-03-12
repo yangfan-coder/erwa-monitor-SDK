@@ -54,9 +54,22 @@ const Home = () => {
     document.body.appendChild(iframe);
   };
 
+  const AjaxRequestError = () => {
+    const xhr = new XMLHttpRequest();
+    xhr.withCredentials = true;
+    xhr.timeout = 3000;
+    xhr.open('get', '/ajaxerror', true);
+    xhr.setRequestHeader('content-type', 'application/json;charset=utf-8');
+    xhr.setRequestHeader('Accept', 'application/json');
+    xhr.send();
+  };
+  const ServerError = () => {};
+  const AjaxReturnError = () => {};
+  const AjaxOvertimeError = () => {};
+
   return (
     <>
-      <h1>Javascript 错误</h1>
+      <h1>Javascript相关错误</h1>
       <Button type='primary' onClick={JSError}>
         JS执行报错
       </Button>
@@ -65,7 +78,7 @@ const Home = () => {
       </Button>
       <hr />
 
-      <h1>资源加载错误</h1>
+      <h1>资源加载相关错误</h1>
       <Button type='primary' onClick={JsLoadError}>
         没有加载JavaScript
       </Button>
@@ -75,8 +88,20 @@ const Home = () => {
       <Button type='primary' onClick={ImagesLoadError}>
         没有加载images
       </Button>
-      <Button type='primary' onClick={IframeLoadError}>
-        没有加载iframe
+      <hr />
+
+      <h1>ajax请求相关错误</h1>
+      <Button type='primary' onClick={AjaxRequestError}>
+        ajax请求错误
+      </Button>
+      <Button type='primary' onClick={ServerError}>
+        服务器错误
+      </Button>
+      <Button type='primary' onClick={AjaxReturnError}>
+        ajax请求失败
+      </Button>
+      <Button type='primary' onClick={AjaxOvertimeError}>
+        ajax请求超时
       </Button>
       <hr />
     </>

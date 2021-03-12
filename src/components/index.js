@@ -6,15 +6,18 @@
 
 import JsError from './JsError';
 import ResourceError from './ResourceError';
+import AjaxError from './AjaxError';
 
 class Index {
   constructor(config) {
     new JsError(config);
-    new ResourceError();
 
     this.init();
   }
-  init() {}
+  init() {
+    new ResourceError();
+    new AjaxError();
+  }
 }
 
 export default Index;
