@@ -20,6 +20,8 @@ const httpStatus = [404, 500];
 
 const httpRequestError = (event) => {
   const { status = 999, statusText: message, responseURL: filename } = event;
+
+  if (status === 200) return;
   const type = httpStatus.includes(status) ? 'httpError' : 'httpTimeout';
 
   return { type, message, filename, code: status };

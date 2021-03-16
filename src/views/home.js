@@ -58,7 +58,8 @@ const Home = () => {
     const xhr = new XMLHttpRequest();
     xhr.withCredentials = true;
     xhr.timeout = 3000;
-    xhr.open('POST', '/ajaxerror', true);
+    // xhr.open('POST', '/ajaxerror', true);
+    xhr.open('GET', 'http://localhost:3003/ajaxerror', true);
     xhr.setRequestHeader('Content-type', 'application/json;charset=utf-8');
     xhr.send(JSON.stringify({ email: 'hello@user.com', response: { name: 'Tester' } }));
   };
