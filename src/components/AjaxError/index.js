@@ -4,51 +4,53 @@
  * @version 1.0
  */
 
-class AjaxError {
-  constructor() {
-    this.oldXHR = window.XMLHttpRequest;
+import ComonError from '../ComonError';
 
-    this.ajax = new this.oldXHR();
-    this.init();
-  }
+const originOpen = XMLHttpRequest.prototype.open;
+const originSend = XMLHttpRequest.prototype.send;
 
-  init() {
-    this.load();
-    window.XMLHttpRequest = this.oldXHR;
-  }
+// 请求
+const httpStatus = [404, 500];
 
-  load() {
-    this.ajax.addEventListener(
-      'loadend',
-      function (event) {
-        console.log(event, 'load');
-      },
-      true,
-    );
-  }
+/**
+ *
+ * 根据请求的status 进行统一的报错
+ *
+ *  */
 
-  // timeout() {
-  //   this[oldXHR].addEventListener(
-  //     'timeout',
-  //     function (event) {
-  //       console.log(event, 'timeout');
-  //     },
-  //     false,
-  //   );
-  // }
+const httpRequestError = (event) => {
+  const { status = 999, statusText: message, responseURL: filename } = event;
+  const type = httpStatus.includes(status) ? 'httpError' : 'httpTimeout';
 
-  // readystatechange() {
-  //   this[oldXHR].addEventListener(
-  //     'readystatechange',
-  //     function (event) {
-  //       console.log(event, 'readystatechange');
-  //     },
-  //     false,
-  //   );
-  // }
-  // get() {
-  //   return this[oldXHR];
-  // }
-}
+  return { type, message, filename, code: status };
+};
+
+/**
+ * 请求错误处理、统一进行上报
+ *
+ *  */
+const httpResfactory = (event) => {
+  const _comonError = new ComonError();
+  const result = httpRequestError(event);
+
+  console.log(result);
+  _comonError.setError(result);
+};
+
+const AjaxError = () => {
+  // 重写open
+  XMLHttpRequest.prototype.open = function () {
+    this.addEventListener('load', function (obj) {
+      httpResfactory(this);
+    });
+
+    originOpen.apply(this, arguments);
+  };
+
+  // 重写send
+  XMLHttpRequest.prototype.send = function () {
+    originSend.apply(this, arguments);
+  };
+};
 
 export default AjaxError;

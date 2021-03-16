@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack serve --host 0.0.0.0 --config ./webpack.config.dev.js"
+    "start": "webpack serve --host 0.0.0.0 --config ./webpack.config.dev.js",
+    "serve:": ""
   },
   "keywords": [],
   "author": "",

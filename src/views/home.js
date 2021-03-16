@@ -58,10 +58,9 @@ const Home = () => {
     const xhr = new XMLHttpRequest();
     xhr.withCredentials = true;
     xhr.timeout = 3000;
-    xhr.open('get', '/ajaxerror', true);
-    xhr.setRequestHeader('content-type', 'application/json;charset=utf-8');
-    xhr.setRequestHeader('Accept', 'application/json');
-    xhr.send();
+    xhr.open('POST', '/ajaxerror', true);
+    xhr.setRequestHeader('Content-type', 'application/json;charset=utf-8');
+    xhr.send(JSON.stringify({ email: 'hello@user.com', response: { name: 'Tester' } }));
   };
   const ServerError = () => {};
   const AjaxReturnError = () => {};
@@ -92,7 +91,7 @@ const Home = () => {
 
       <h1>ajax请求相关错误</h1>
       <Button type='primary' onClick={AjaxRequestError}>
-        ajax请求错误
+        ajax【post】请求错误
       </Button>
       <Button type='primary' onClick={ServerError}>
         服务器错误

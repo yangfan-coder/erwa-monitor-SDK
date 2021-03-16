@@ -17,19 +17,19 @@ class ResourceError {
     const that = this;
 
     // 捕获当前的 script、link、img
-    const loadError = function (event) {
+    const resourceError = function (event) {
       const target = event.target || event.srcElement;
       const localName = target.localName;
 
-      const data = { filename: localName, type: 'loadError' };
-      that.comonError.getError(data);
+      const data = { filename: localName, type: 'resourceError' };
+      that.comonError.setError(data);
     };
 
-    window.addEventListener('error', loadError, true);
+    window.addEventListener('error', resourceError, true);
 
     this.collectEvent.setEvent({
-      name: 'loadError',
-      func: loadError,
+      name: 'resourceError',
+      func: resourceError,
     });
   }
 }

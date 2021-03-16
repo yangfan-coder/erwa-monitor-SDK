@@ -46,7 +46,7 @@ class JsError {
       // # lineno => <https://developer.mozilla.org/zh-CN/docs/Web/API/GlobalEventHandlers/onerror>
       const { lineno, filename, message, type } = event;
       const data = Object.assign({}, that.config, { lineno, filename, message, type });
-      that.comonError.getError(data);
+      that.comonError.setError(data);
     };
 
     window.addEventListener('error', eventError, true);
@@ -64,7 +64,7 @@ class JsError {
     const unhandledrejection = function (event) {
       const { lineno = '', filename = '', reason: message, type } = event;
       const data = Object.assign({}, that.config, { lineno, filename, message, type });
-      that.comonError.getError(data);
+      that.comonError.setError(data);
     };
 
     // # https://developer.mozilla.org/zh-CN/docs/Web/API/Window/unhandledrejection_event

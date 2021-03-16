@@ -16,7 +16,7 @@ class Index {
   }
   init() {
     new ResourceError();
-    new AjaxError();
+    AjaxError();
   }
 }
 
