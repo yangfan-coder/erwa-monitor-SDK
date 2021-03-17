@@ -5,6 +5,7 @@
  */
 
 import ComonError from '../ComonError';
+import axios from 'axios';
 
 const originOpen = XMLHttpRequest.prototype.open;
 const originSend = XMLHttpRequest.prototype.send;
@@ -35,21 +36,26 @@ const httpResfactory = (event) => {
   const _comonError = new ComonError();
   const result = httpRequestError(event);
 
-  console.log(result);
   _comonError.setError(result);
 };
 
+const fetch = function () {
+  console.log(arguments);
+  // return axios({});
+};
+
 const AjaxError = () => {
-  // 重写open
+  window._fetch = fetch;
+  // 初始化一个请求
   XMLHttpRequest.prototype.open = function () {
-    this.addEventListener('load', function (obj) {
+    this.addEventListener('loadend', function () {
       httpResfactory(this);
     });
 
     originOpen.apply(this, arguments);
   };
 
-  // 重写send
+  // 发送接口
   XMLHttpRequest.prototype.send = function () {
     originSend.apply(this, arguments);
   };

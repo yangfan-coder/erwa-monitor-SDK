@@ -56,9 +56,14 @@ class ComonError {
       else if (type === 'httpError') {
         result = Object.assign({}, data, { lineno, filename, message, type, typeId, code });
       }
+      // http 超时错误
+      else if (type === 'httpTimeout') {
+        result = Object.assign({}, data, { lineno, filename, message, type, typeId, code });
+      }
     }
 
     this.errors = addObjectPrefix(result);
+
     console.log(this.errors);
   }
 }

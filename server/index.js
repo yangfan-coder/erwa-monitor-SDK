@@ -30,11 +30,33 @@ app.use(
   }),
 );
 
-router.get('/ajaxerror', async (ctx, next) => {
+router.get('/ajaxerror', async (ctx) => {
+  ctx.body = {
+    code: 200,
+    massage: '请求接口成功',
+  };
+});
+
+router.get('/serveError', async (ctx) => {
+  ctx.response.status = 500;
+  // ctx.throw(500, 'name required');
+});
+
+router.get('/serveErrorTime', async (ctx) => {
+  const wait = function () {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve('我得到结果了');
+      }, 3000);
+    });
+  };
+
+  const res = await wait();
+
+  console.log(res);
   ctx.body = {
     code: 200,
   };
-  await next();
 });
 
 app.use(bodyParser()).use(router.routes()).use(router.allowedMethods());

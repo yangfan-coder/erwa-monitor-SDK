@@ -9,3 +9,38 @@ html {
 button {
   margin: 20px;
 }
+.axios-btn {
+  background-color: #e05c5c;
+  border-color: #e05c5c;
+}
+
+.axios-btn:hover,
+.axios-btn:focus,
+.axios-btn:active {
+  background-color: #e05c5c;
+  border-color: #e05c5c;
+}
+
+.fetch-btn {
+  background-color: #b9b949;
+  border-color: #b9b949;
+}
+
+.fetch-btn:hover,
+.fetch-btn:focus,
+.fetch-btn:active {
+  background-color: #b9b949;
+  border-color: #b9b949;
+}
+
+.pack-fetch-btn {
+  background-color: #000;
+  border-color: #000;
+}
+
+.pack-fetch-btn:hover,
+.pack-fetch-btn:focus,
+.pack-fetch-btn:active {
+  background-color: #000;
+  border-color: #000;
+}
