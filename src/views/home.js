@@ -38,7 +38,6 @@ const Home = () => {
     css.type = `text/css`;
     css.rel = 'stylesheet';
     css.href = `undefined.css`;
-    console.log(css);
     document.head.appendChild(css);
   };
 
@@ -113,13 +112,13 @@ const Home = () => {
   };
 
   const packageFetchRequestError = () => {
-    _fetch('http://localhost:3003/ajaxerror1', {});
-    // .then(function (response) {
-    //   console.log(response);
-    // })
-    // .then(function (myJson) {
-    //   console.log(myJson);
-    // });
+    fetch('http://localhost:3003/ajaxerror1', {})
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (myJson) {
+        console.log(myJson);
+      });
   };
 
   const FetchRequestError = () => {

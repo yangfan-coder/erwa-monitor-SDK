@@ -5,10 +5,13 @@
  */
 
 import ComonError from '../ComonError';
-import axios from 'axios';
 
+// ajax prototype
 const originOpen = XMLHttpRequest.prototype.open;
 const originSend = XMLHttpRequest.prototype.send;
+
+// fetch prototype
+const originalFetch = window.fetch;
 
 // 请求
 const httpStatus = [404, 500];
@@ -19,33 +22,42 @@ const httpStatus = [404, 500];
  *
  *  */
 
-const httpRequestError = (event) => {
-  const { status = 999, statusText: message, responseURL: filename } = event;
+const httpRequestError = (event, isType) => {
+  let data = {};
 
   if (status === 200) return;
-  const type = httpStatus.includes(status) ? 'httpError' : 'httpTimeout';
 
-  return { type, message, filename, code: status };
+  if (isType) {
+    const { status = 999, statusText: message, responseURL: filename } = event;
+    data = { status, message, filename };
+  } else {
+    const { status = 999, statusText: message, url: filename } = event;
+    data = { status, message, filename };
+  }
+
+  const type = httpStatus.includes(data.status) ? 'httpError' : 'httpTimeout';
+
+  return { ...data, type };
 };
 
 /**
  * 请求错误处理、统一进行上报
  *
  *  */
-const httpResfactory = (event) => {
+const httpResfactory = (event, type = 'ajax') => {
   const _comonError = new ComonError();
-  const result = httpRequestError(event);
+  const isType = type === 'ajax';
+  const result = httpRequestError(event, isType);
 
   _comonError.setError(result);
 };
 
-const fetch = function () {
-  console.log(arguments);
-  // return axios({});
-};
+/**
+ * 重写ajax状态进行上报
+ *
+ *  */
 
 const AjaxError = () => {
-  window._fetch = fetch;
   // 初始化一个请求
   XMLHttpRequest.prototype.open = function () {
     this.addEventListener('loadend', function () {
@@ -61,4 +73,30 @@ const AjaxError = () => {
   };
 };
 
-export default AjaxError;
+/**
+ * 重写fetch状态进行上报
+ *
+ *  */
+
+const FetchError = () => {
+  window.fetch = function (input, config = {}) {
+    return originalFetch.call(null, input, config).then(
+      (response) => {
+        httpResfactory(response, 'fetch');
+        return response;
+      },
+      (error) => {
+        console.warn('我特喵的真的报错了？');
+        throw error;
+      },
+    );
+  };
+};
+
+// 初始化
+const init = () => {
+  AjaxError();
+  FetchError();
+};
+
+export default init;

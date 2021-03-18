@@ -7,6 +7,7 @@
 import JsError from './JsError';
 import ResourceError from './ResourceError';
 import AjaxError from './AjaxError';
+import InitConsole from '../utils/rewritelog';
 
 class Index {
   constructor(config) {
@@ -17,6 +18,7 @@ class Index {
   init() {
     new ResourceError();
     AjaxError();
+    InitConsole();
   }
 }
 

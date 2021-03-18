@@ -64,7 +64,7 @@ class ComonError {
 
     this.errors = addObjectPrefix(result);
 
-    console.log(this.errors);
+    // console.log(this.errors);
   }
 }
 
