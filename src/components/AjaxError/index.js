@@ -25,7 +25,7 @@ const httpStatus = [404, 500];
 const httpRequestError = (event, isType) => {
   let data = {};
 
-  if (status === 200) return;
+  if (event.status === 200) return;
 
   if (isType) {
     const { status = 999, statusText: message, responseURL: filename } = event;

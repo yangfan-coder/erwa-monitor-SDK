@@ -12,13 +12,15 @@ import InitConsole from '../utils/rewritelog';
 class Index {
   constructor(config) {
     new JsError(config);
-
     this.init();
   }
   init() {
     new ResourceError();
     AjaxError();
     InitConsole();
+  }
+  test() {
+    console.log('测试上报的方法');
   }
 }
 

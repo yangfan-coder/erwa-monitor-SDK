@@ -17,7 +17,7 @@ class ComonError {
     this.errors = {};
   }
 
-  // 静态存储获取当前的错误类型、
+  // 静态存储获取当前的错误类型、cum
   [ErrorType](type) {
     const Type = {
       error: 1, // JavaScript的报错
@@ -25,7 +25,7 @@ class ComonError {
       resourceError: 3, // 加载资源报错
       httpError: 4, // http 请求报错
       httpTimeout: 5, // http 请求超时
-      default: -99,
+      default: -99, // 默认的错误
     };
 
     return Type[type] || Type['default'];
@@ -42,7 +42,7 @@ class ComonError {
 
       // javascript 上报错误
       if (type === 'error') {
-        result = Object.assign({}, data, { lineno, filename, message, type, typeId, code });
+        yf = Object.assign({}, data, { lineno, filename, message, type, typeId, code });
       }
       // promise reject 上报错误
       else if (type === 'unhandledrejection') {
